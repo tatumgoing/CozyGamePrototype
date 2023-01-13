@@ -1,9 +1,9 @@
 let config = {
     type: Phaser.CANVAS,
-    width: 640,
-    height: 480,
+    width: 1280,
+    height: 960,
 
-    scene: [ SceneOne ]
+    scene: [ SceneOne, TaskOne, TaskTwo, Customers ]
 }
 
 //game declaration
