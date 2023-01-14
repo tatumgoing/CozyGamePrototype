@@ -43,6 +43,8 @@ class SceneOne extends Phaser.Scene {
 
         //player
         this.player= this.add.sprite(gamewidth/1.15, gameheight/2,'player').setOrigin(.5,.5);
+        this.customer= this.add.sprite(gamewidth+200, gameheight/2,'player').setOrigin(.5,.5);
+
 
         //cakethings
         this.order= this.add.sprite(gamewidth/1.15, gameheight/2-50,'order').setOrigin(.5,.5);
@@ -125,7 +127,6 @@ class SceneOne extends Phaser.Scene {
       
       //pans the camera if the player is at the register
       if(this.atcashiertable){
-        this.transitioned=true;
         this.cameras.main.stopFollow(this.player);
         this.cameras.main.pan(
           gamewidth+200,
@@ -133,18 +134,11 @@ class SceneOne extends Phaser.Scene {
           1000,
           'Sine.easeOut'
           );
+          this.transitioned=true;
       }
       else if(this.transitioned){
-        this.cameras.main.pan(
-          this.player.x,
-          this.player.y,
-          1000,
-          'Sine.easeOut'
-      );
-        this.time.addEvent({delay:2000, callback: () =>{
-          this.cameras.main.startFollow(this.player);
-          this.transitioned=false;
-        }, callbackScope: this, loop: false});
+        this.transitioned=false;
+        this.cameras.main.startFollow(this.player,.5,.5);
       }
 
       //changes opactiy on cake items and makes it move with player
