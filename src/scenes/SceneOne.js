@@ -32,7 +32,7 @@ class SceneOne extends Phaser.Scene {
         this.mixing = this.add.sprite(0, 0, 'mixing').setOrigin(0, 0);
         this.mixing.scaleX= .75;
         this.mixing.scaleY= .75;
-        this.oven = this.add.sprite(0, 0, 'ovens').setOrigin(0, 0);
+        this.oven = this.add.sprite(0, 0, 'ovens').setOrigin(0, 0).setInteractive();
         this.oven.scaleX= .75;
         this.oven.scaleY= .75;
 
@@ -46,6 +46,13 @@ class SceneOne extends Phaser.Scene {
         //movement
         this.cursors = this.input.keyboard.createCursorKeys();
         this.speed=5;
+
+        //mouse
+        this.isClicking = false;
+        this.oven.on('pointerdown', function() {
+          console.log("click! switch to task one");
+        });
+
       }
 
     update() {
@@ -66,5 +73,12 @@ class SceneOne extends Phaser.Scene {
       {
         this.player.y+=this.speed;  
       }
+
+      // if (this.isClicking = true) {
+      //   this.isClicking = false;
+        
+      //   //this.scene.start('TaskOne');
+      // }
+      
     }
 }
