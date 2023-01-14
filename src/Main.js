@@ -16,3 +16,9 @@ let gamewidth= game.config.width;
 let gameheight= game.config.height;
 let borderUISize= game.config.height / 15;
 let borderPadding = borderUISize / 3;
+
+//gamestate
+let ordered= false;
+let mixed= false;
+let cooked= false;
+let decorated= false;

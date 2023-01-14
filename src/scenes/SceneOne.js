@@ -5,6 +5,11 @@ class SceneOne extends Phaser.Scene {
     preload(){
       this.load.image('player', './assets/player.png');
 
+      this.load.image('order', './assets/order.png');
+      this.load.image('batter', './assets/batter.png');
+      this.load.image('cake', './assets/cake.png');
+      this.load.image('decoratedcake', './assets/decorated_cake.png');
+
       this.load.image('shop', './assets/shop.png');
       this.load.image('cashier', './assets/cashier_hitbox.png');
       this.load.image('decorating', './assets/decorating_hitbox.png');
@@ -39,6 +44,19 @@ class SceneOne extends Phaser.Scene {
         //player
         this.player= this.add.sprite(gamewidth/1.15, gameheight/2,'player').setOrigin(.5,.5);
 
+        //cakethings
+        this.order= this.add.sprite(gamewidth/1.15, gameheight/2-50,'order').setOrigin(.5,.5);
+        this.batter= this.add.sprite(gamewidth/1.15, gameheight/2-50,'batter').setOrigin(.5,.5);
+        this.cake= this.add.sprite(gamewidth/1.15, gameheight/2-50,'cake').setOrigin(.5,.5);
+        this.dcake= this.add.sprite(gamewidth/1.15, gameheight/2-50,'decoratedcake').setOrigin(.5,.5);
+        
+        this.order.alpha=0;
+        this.batter.alpha=0;
+        this.cake.alpha=0;
+        this.dcake.alpha=0;
+
+
+
         //camera
         this.cameras.main.setBounds(0, 0, this.shop.width, gameheight);
         this.cameras.main.startFollow(this.player);
@@ -61,22 +79,7 @@ class SceneOne extends Phaser.Scene {
 
     update() {
       //movement
-      if (this.cursors.left.isDown)
-      {
-        this.player.x-=this.speed;
-      }
-      else if (this.cursors.right.isDown)
-      {
-        this.player.x+=this.speed;  
-      }
-      if (this.cursors.up.isDown)
-      {
-        this.player.y-=this.speed;  
-      }
-      else if (this.cursors.down.isDown)
-      {
-        this.player.y+=this.speed;  
-      }
+      this.movingstuff(this.player);
 
       // if (this.isClicking = true) {
       //   this.isClicking = false;
@@ -84,7 +87,7 @@ class SceneOne extends Phaser.Scene {
       //   //this.scene.start('TaskOne');
       // }
 
-      //popup check
+      //checks to see if player is close enough to hitbox to trigger task
 
       if(this.collisioncheck(this.cashier)){
         console.log("cashier");
@@ -97,22 +100,41 @@ class SceneOne extends Phaser.Scene {
         console.log("decorating");
         if(Phaser.Input.Keyboard.JustDown(keySPACE))
         {
-          this.scene.start('TaskTwo');
+          this.scene.start('TaskFour');
         }
       }
       if(this.collisioncheck(this.mixing)){
         console.log("mixing");
         if(Phaser.Input.Keyboard.JustDown(keySPACE))
         {
-          this.scene.start('TaskThree');
+          this.scene.start('TaskTwo');
         }
       }
       if(this.collisioncheck(this.oven)){
         console.log("oven");
         if(Phaser.Input.Keyboard.JustDown(keySPACE))
         {
-          this.scene.start('TaskFour');
+          this.scene.start('TaskThree');
         }
+      }
+
+      //changes opactiy on cake items and makes it move with player
+      console.log(ordered);
+      if(ordered){
+        this.order.alpha= 1;
+        this.movingstuff(this.order);
+      }
+      if(mixed){
+        this.batter.alpha= 1;
+        this.movingstuff(this.batter);
+      }
+      if(cooked){
+        this.cake.alpha= 1;
+        this.movingstuff(this.cake);
+      }
+      if(decorated){
+        this.dcake.alpha= 1;
+        this.movingstuff(this.dcake);
       }
      
     }
@@ -123,6 +145,25 @@ class SceneOne extends Phaser.Scene {
       }
       else {
         return false;
+      }
+    }
+
+    movingstuff(thingy){
+      if (this.cursors.left.isDown)
+      {
+        thingy.x-=this.speed;
+      }
+      else if (this.cursors.right.isDown)
+      {
+        thingy.x+=this.speed;  
+      }
+      if (this.cursors.up.isDown)
+      {
+        thingy.y-=this.speed;  
+      }
+      else if (this.cursors.down.isDown)
+      {
+        thingy.y+=this.speed;  
       }
     }
 }
