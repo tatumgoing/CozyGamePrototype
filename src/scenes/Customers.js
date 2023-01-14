@@ -1,4 +1,4 @@
-class Menu extends Phaser.Scene {
+class Customers extends Phaser.Scene {
     constructor() {
       super("Customers");
     }
