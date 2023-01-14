@@ -60,6 +60,7 @@ class SceneOne extends Phaser.Scene {
         //camera
         this.cameras.main.setBounds(0, 0, this.shop.width, gameheight);
         this.cameras.main.startFollow(this.player);
+        this.transitioned=false;
 
         //movement
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -91,10 +92,14 @@ class SceneOne extends Phaser.Scene {
 
       if(this.collisioncheck(this.cashier)){
         console.log("cashier");
+        this.atcashiertable=true;
         if(Phaser.Input.Keyboard.JustDown(keySPACE))
         {
           this.scene.start('TaskOne');
         }
+      }
+      else{
+        this.atcashiertable=false;
       }
       if(this.collisioncheck(this.decorating)){
         console.log("decorating");
@@ -117,9 +122,32 @@ class SceneOne extends Phaser.Scene {
           this.scene.start('TaskThree');
         }
       }
+      
+      //pans the camera if the player is at the register
+      if(this.atcashiertable){
+        this.transitioned=true;
+        this.cameras.main.stopFollow(this.player);
+        this.cameras.main.pan(
+          gamewidth+200,
+          gameheight/2,
+          1000,
+          'Sine.easeOut'
+          );
+      }
+      else if(this.transitioned){
+        this.cameras.main.pan(
+          this.player.x,
+          this.player.y,
+          1000,
+          'Sine.easeOut'
+      );
+        this.time.addEvent({delay:2000, callback: () =>{
+          this.cameras.main.startFollow(this.player);
+          this.transitioned=false;
+        }, callbackScope: this, loop: false});
+      }
 
       //changes opactiy on cake items and makes it move with player
-      console.log(ordered);
       if(ordered){
         this.order.alpha= 1;
         this.movingstuff(this.order);
@@ -140,10 +168,12 @@ class SceneOne extends Phaser.Scene {
     }
 
     collisioncheck(station) {
-      if(this.player.x>= station.x - this.player.width/2 && this.player.x <= station.x +station.width && this.player.y >= station.y - this.player.height/2 && this.player.y <= station.y+ station.height) {
+      if(this.player.x +50>= station.x && this.player.x-50 <= station.x +station.width*.75 && this.player.y +50 >= station.y && this.player.y-50<= station.y+ station.height*.75) {
+        station.alpha= 1;
         return true;
       }
       else {
+        station.alpha= .50;
         return false;
       }
     }
@@ -153,7 +183,7 @@ class SceneOne extends Phaser.Scene {
       {
         thingy.x-=this.speed;
       }
-      else if (this.cursors.right.isDown)
+      else if (this.cursors.right.isDown && thingy.x< this.cashier.x-30)
       {
         thingy.x+=this.speed;  
       }
