@@ -3,7 +3,7 @@ let config = {
     width: 960,
     height: 720,
 
-    scene: [ SceneOne, TaskOne, TaskTwo, Customers ]
+    scene: [ SceneOne, TaskOne, TaskTwo, TaskThree, TaskFour, Customers ]
 }
 
 //game declaration
