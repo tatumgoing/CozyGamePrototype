@@ -19,32 +19,82 @@ class SceneOne extends Phaser.Scene {
     }
 
     create() {
+        let current_scene = this;
         this.add.text(20, 20, "This is the main screen!");
 
         //kitchen + scaling
-        this.shop = this.add.sprite(0, 0, 'shop').setOrigin(0, 0);
+        this.shop = this.add.sprite(0, 0, 'shop').setOrigin(0, 0).setInteractive();
         this.shop.scaleX= .75;
         this.shop.scaleY= .75;
-        this.cashier = this.add.sprite(920, 250, 'cashier').setOrigin(0, 0);
+        
+        this.cashier = this.add.sprite(920, 250, 'cashier').setOrigin(0, 0).setInteractive();
         this.cashier.scaleX= .75;
         this.cashier.scaleY= .75;
-        this.decorating = this.add.sprite(350, 290, 'decorating').setOrigin(0, 0);
+        this.cashier.on('pointerdown', function() {
+          console.log("cashier click!");
+          current_scene.scene.start('TaskOne');
+        });
+
+        this.decorating = this.add.sprite(350, 290, 'decorating').setOrigin(0, 0).setInteractive();
         this.decorating.scaleX= .75;
         this.decorating.scaleY= .75;
-        this.mailing = this.add.sprite(0, 150, 'mailing').setOrigin(0, 0);
+        this.decorating.on('pointerdown', function() {
+          console.log("decorating click!");
+          current_scene.scene.start('TaskFour');
+        });
+
+        this.mailing = this.add.sprite(0, 150, 'mailing').setOrigin(0, 0).setInteractive();
         this.mailing.scaleX= .75;
         this.mailing.scaleY= .75;
-        this.mixing = this.add.sprite(150, 585, 'mixing').setOrigin(0, 0);
+        this.mailing.on('pointerdown', function() {
+          console.log("mailing click!");
+          current_scene.scene.start('TaskTwo');
+        });
+
+        this.mixing = this.add.sprite(150, 585, 'mixing').setOrigin(0, 0).setInteractive();
         this.mixing.scaleX= .75;
         this.mixing.scaleY= .75;
+        this.mixing.on('pointerdown', function() {
+          console.log("mixing click!");
+          current_scene.scene.start('TaskTwo');
+        });
+
         this.oven = this.add.sprite(150, 0, 'ovens').setOrigin(0, 0).setInteractive();
         this.oven.scaleX= .75;
         this.oven.scaleY= .75;
+        this.oven.on('pointerdown', function() {
+          console.log("oven click!");
+          current_scene.scene.start('TaskThree');
+        });
+        
 
         //player
-        this.player= this.add.sprite(gamewidth/1.15, gameheight/2,'player').setOrigin(.5,.5);
-        this.customer= this.add.sprite(gamewidth+200, gameheight/2,'player').setOrigin(.5,.5);
+        this.player = this.add.sprite(gamewidth/1.15, gameheight/2,'player').setOrigin(.5,.5);
 
+        this.customer = this.add.sprite(gamewidth/0.9, gameheight/2,'player').setOrigin(.5,.5).setInteractive();
+        this.customer.on('pointerdown', function() {
+          console.log("customer click!");
+          current_scene.scene.start('Customers');
+        });
+
+        //test click and drag
+        let test = this.add.sprite(100, 200,'player').setOrigin(.5, .5).setInteractive();
+        let yoinked = null;
+
+        test.on('pointerdown', function() {
+          yoinked = test;
+        }, this);
+
+        this.input.on('pointerup', function() {
+          yoinked = null;
+        }, this);
+
+        this.input.on('pointermove', function(pointer) {
+          if (yoinked != null) {
+            yoinked.x = pointer.x + current_scene.cameras.main.centerX-(current_scene.cameras.main.displayWidth/2);
+            yoinked.y = pointer.y + current_scene.cameras.main.centerY-(current_scene.cameras.main.displayHeight/2);
+          }
+        }, this);
 
         //cakethings
         this.order= this.add.sprite(gamewidth/1.15, gameheight/2-50,'order').setOrigin(.5,.5);
@@ -57,8 +107,6 @@ class SceneOne extends Phaser.Scene {
         this.cake.alpha=0;
         this.dcake.alpha=0;
 
-
-
         //camera
         this.cameras.main.setBounds(0, 0, this.shop.width, gameheight);
         this.cameras.main.startFollow(this.player);
@@ -68,27 +116,20 @@ class SceneOne extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
         this.speed=5;
 
-        //mouse
-        this.isClicking = false;
-        this.oven.on('pointerdown', function() {
-          console.log("click! switch to task one");
-        });
-
         //keys
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
       }
 
     update() {
+
       //movement
       this.movingstuff(this.player);
-
-      // if (this.isClicking = true) {
-      //   this.isClicking = false;
-        
-      //   //this.scene.start('TaskOne');
-      // }
 
       //checks to see if player is close enough to hitbox to trigger task
 
@@ -104,21 +145,21 @@ class SceneOne extends Phaser.Scene {
         this.atcashiertable=false;
       }
       if(this.collisioncheck(this.decorating)){
-        console.log("decorating");
+        // console.log("decorating");
         if(Phaser.Input.Keyboard.JustDown(keySPACE))
         {
           this.scene.start('TaskFour');
         }
       }
       if(this.collisioncheck(this.mixing)){
-        console.log("mixing");
+        // console.log("mixing");
         if(Phaser.Input.Keyboard.JustDown(keySPACE))
         {
           this.scene.start('TaskTwo');
         }
       }
       if(this.collisioncheck(this.oven)){
-        console.log("oven");
+        // console.log("oven");
         if(Phaser.Input.Keyboard.JustDown(keySPACE))
         {
           this.scene.start('TaskThree');
@@ -157,6 +198,23 @@ class SceneOne extends Phaser.Scene {
       if(decorated){
         this.dcake.alpha= 1;
         this.movingstuff(this.dcake);
+      }
+
+      if (Phaser.Input.Keyboard.JustDown(keyA))
+      {
+        this.player.x-=this.speed;
+      }
+      else if (Phaser.Input.Keyboard.JustDown(keyD))
+      {
+        this.player.x+=this.speed;  
+      }
+      if (Phaser.Input.Keyboard.JustDown(keyW))
+      {
+        this.player.y-=this.speed;  
+      }
+      else if (Phaser.Input.Keyboard.JustDown(keyS))
+      {
+        this.player.y+=this.speed;  
       }
      
     }
