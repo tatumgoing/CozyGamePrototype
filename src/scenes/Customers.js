@@ -7,7 +7,10 @@ class Customers extends Phaser.Scene {
     }
 
     create() {
-        this.add.text(20, 20, "This is the customer interaction screen!");
+      this.add.text(20, 20, "This is the customer interaction screen!");
+      
+      //keys
+      keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
 
     }
 

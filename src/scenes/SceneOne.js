@@ -119,6 +119,10 @@ class SceneOne extends Phaser.Scene {
         //keys
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
       }
 
@@ -194,6 +198,23 @@ class SceneOne extends Phaser.Scene {
       if(decorated){
         this.dcake.alpha= 1;
         this.movingstuff(this.dcake);
+      }
+
+      if (Phaser.Input.Keyboard.JustDown(keyA))
+      {
+        this.player.x-=this.speed;
+      }
+      else if (Phaser.Input.Keyboard.JustDown(keyD))
+      {
+        this.player.x+=this.speed;  
+      }
+      if (Phaser.Input.Keyboard.JustDown(keyW))
+      {
+        this.player.y-=this.speed;  
+      }
+      else if (Phaser.Input.Keyboard.JustDown(keyS))
+      {
+        this.player.y+=this.speed;  
       }
      
     }
