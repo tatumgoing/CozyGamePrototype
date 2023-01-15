@@ -200,22 +200,23 @@ class SceneOne extends Phaser.Scene {
         this.movingstuff(this.dcake);
       }
 
-      if (Phaser.Input.Keyboard.JustDown(keyA))
-      {
-        this.player.x-=this.speed;
-      }
-      else if (Phaser.Input.Keyboard.JustDown(keyD))
-      {
-        this.player.x+=this.speed;  
-      }
-      if (Phaser.Input.Keyboard.JustDown(keyW))
-      {
-        this.player.y-=this.speed;  
-      }
-      else if (Phaser.Input.Keyboard.JustDown(keyS))
-      {
-        this.player.y+=this.speed;  
-      }
+      //WASD Controlls
+      // if (Phaser.Input.Keyboard.JustDown(keyA))
+      // {
+      //   this.player.x-=this.speed;
+      // }
+      // else if (Phaser.Input.Keyboard.JustDown(keyD))
+      // {
+      //   this.player.x+=this.speed;  
+      // }
+      // if (Phaser.Input.Keyboard.JustDown(keyW))
+      // {
+      //   this.player.y-=this.speed;  
+      // }
+      // else if (Phaser.Input.Keyboard.JustDown(keyS))
+      // {
+      //   this.player.y+=this.speed;  
+      // }
      
     }
 
