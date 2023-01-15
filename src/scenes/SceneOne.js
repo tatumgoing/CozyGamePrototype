@@ -71,7 +71,7 @@ class SceneOne extends Phaser.Scene {
         //player
         this.player = this.add.sprite(gamewidth/1.15, gameheight/2,'player').setOrigin(.5,.5);
 
-        this.customer = this.add.sprite(gamewidth/0.9, gameheight/2,'player').setOrigin(.5,.5).setInteractive();
+        this.customer = this.add.sprite(1350, gameheight-150,'player').setOrigin(.5,.5).setInteractive();
         this.customer.on('pointerdown', function() {
           console.log("customer click!");
           current_scene.scene.start('Customers');

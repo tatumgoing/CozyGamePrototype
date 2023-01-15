@@ -3,10 +3,11 @@ class TaskFour extends Phaser.Scene {
       super("TaskFour");
     }
     preload(){
-    
+        this.load.image('backgrounddeco', './assets/ComfyGame 3.png');
     }
 
     create() {
+        this.add.sprite(0, 0, "backgrounddeco").setOrigin(0, 0);
         this.add.text(20, 20, "Press Space to decorate the cake! Esc to go back!");
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
