@@ -71,47 +71,30 @@ class SceneOne extends Phaser.Scene {
         //player
         this.player = this.add.sprite(gamewidth/1.15, gameheight/2,'player').setOrigin(.5,.5);
 
-        //testing click and drag
-        this.test= this.add.sprite(gamewidth+200, gameheight/2,'player').setOrigin(.5,.5).setInteractive();
-
-        
-        this.input.on('pointerdown', function(pointer) {
-          this.input.mouse.requestPointerLock();
-        }, this);
-        
-        //movement when dragged
-        this.input.on('pointermove', function(pointer) {
-          if (this.input.mouse.locked) {
-            this.test.x += pointer.movementX;
-            this.test.y += pointer.movementY;
-          }
-
-          //a wiggle for fun
-          if (pointer.movementX > 0) { 
-            this.test.setRotation(0.1); 
-          }
-          else if (pointer.movementX < 0) {
-            this.test.setRotation(-0.1);
-          }
-          else {
-            this.test.setRotation(0);
-          }
-
-        }, this);
-
-        this.input.on('pointerdown', function (event) {
-          if (this.input.mouse.locked)
-          {
-              this.input.mouse.releasePointerLock();
-          }
-        }, this);
-
-
         this.customer = this.add.sprite(gamewidth/0.9, gameheight/2,'player').setOrigin(.5,.5).setInteractive();
         this.customer.on('pointerdown', function() {
           console.log("customer click!");
           current_scene.scene.start('Customers');
         });
+
+        //test click and drag
+        let test = this.add.sprite(100, 200,'player').setOrigin(.5, .5).setInteractive();
+        let yoinked = null;
+
+        test.on('pointerdown', function() {
+          yoinked = test;
+        }, this);
+
+        this.input.on('pointerup', function() {
+          yoinked = null;
+        }, this);
+
+        this.input.on('pointermove', function(pointer) {
+          if (yoinked != null) {
+            yoinked.x = pointer.x + current_scene.cameras.main.centerX-(current_scene.cameras.main.displayWidth/2);
+            yoinked.y = pointer.y + current_scene.cameras.main.centerY-(current_scene.cameras.main.displayHeight/2);
+          }
+        }, this);
 
         //cakethings
         this.order= this.add.sprite(gamewidth/1.15, gameheight/2-50,'order').setOrigin(.5,.5);
@@ -140,6 +123,7 @@ class SceneOne extends Phaser.Scene {
       }
 
     update() {
+
       //movement
       this.movingstuff(this.player);
 

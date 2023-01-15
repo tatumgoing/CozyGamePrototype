@@ -12,6 +12,8 @@ class Customers extends Phaser.Scene {
     }
 
     update() {
-       
+      if(Phaser.Input.Keyboard.JustDown(keyESC)) {
+        this.scene.start('SceneOne');
+      }
     }
 }
