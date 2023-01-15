@@ -69,8 +69,42 @@ class SceneOne extends Phaser.Scene {
         
 
         //player
-        this.player= this.add.sprite(gamewidth/1.15, gameheight/2,'player').setOrigin(.5,.5);
-        this.customer= this.add.sprite(gamewidth+200, gameheight/2,'player').setOrigin(.5,.5);
+        this.player = this.add.sprite(gamewidth/1.15, gameheight/2,'player').setOrigin(.5,.5);
+
+        //testing click and drag
+        this.test= this.add.sprite(gamewidth+200, gameheight/2,'player').setOrigin(.5,.5).setInteractive();
+
+        
+        this.input.on('pointerdown', function(pointer) {
+          this.input.mouse.requestPointerLock();
+        }, this);
+        
+        //movement when dragged
+        this.input.on('pointermove', function(pointer) {
+          if (this.input.mouse.locked) {
+            this.test.x += pointer.movementX;
+            this.test.y += pointer.movementY;
+          }
+
+          //a wiggle for fun
+          if (pointer.movementX > 0) { 
+            this.test.setRotation(0.1); 
+          }
+          else if (pointer.movementX < 0) {
+            this.test.setRotation(-0.1);
+          }
+          else {
+            this.test.setRotation(0);
+          }
+
+        }, this);
+
+        this.input.on('pointerdown', function (event) {
+          if (this.input.mouse.locked)
+          {
+              this.input.mouse.releasePointerLock();
+          }
+        }, this);
 
 
         this.customer = this.add.sprite(gamewidth/0.9, gameheight/2,'player').setOrigin(.5,.5).setInteractive();
