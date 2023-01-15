@@ -125,7 +125,7 @@ class SceneOne extends Phaser.Scene {
         }
       }
       
-      //pans the camera if the player is at the register
+      //pans the camera if the player is at the register and follows the player if theyre not
       if(this.atcashiertable){
         this.cameras.main.stopFollow(this.player);
         this.cameras.main.pan(
