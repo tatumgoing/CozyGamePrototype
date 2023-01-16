@@ -126,7 +126,7 @@ class SceneOne extends Phaser.Scene {
       //checks to see if player is close enough to hitbox to trigger task
 
       if(this.collisioncheck(this.cashier)){
-        console.log("cashier");
+        //console.log("cashier");
         this.atcashiertable=true;
         if(Phaser.Input.Keyboard.JustDown(keySPACE))
         {
