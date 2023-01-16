@@ -3,31 +3,36 @@ class TaskTwo extends Phaser.Scene {
       super("TaskTwo");
     }
     preload(){
-      this.load.image('batter', './assets/batter.png');
+      this.load.image('milk', './assets/milk.png');
       this.load.image('mixing_bowl', './assets/mixing_bowl.png');
+      this.load.image('mixing_table', './assets/mixing_table.png');
+      this.load.image('flour', './assets/flour.png');
+      this.load.image('eggs', './assets/eggs.png');
     }
 
     create() {
       //let current_scene = this;
-      this.add.text(20, 20, "Press space to mix the batter! Esc to go back!");
-      this.mixing_bowl = this.add.sprite(540, 350,'mixing_bowl').setOrigin(.5, .5).setInteractive();
-      this.batter = this.add.sprite(100, 200,'batter').setOrigin(.5, .5).setInteractive();
-      this.batter2 = this.add.sprite(150, 200,'batter').setOrigin(.5, .5).setInteractive();
-      this.batter3 = this.add.sprite(100, 250,'batter').setOrigin(.5, .5).setInteractive();
+      this.table = this.add.sprite(0, 0, 'mixing_table').setOrigin(0, 0).setInteractive();
+      this.add.text(20, 20, "Drag ingredients into the bowl! Press space to mix the batter! Esc to go back!");
+      this.mixing_bowl = this.add.sprite(700, 350,'mixing_bowl').setOrigin(.5, .5).setInteractive();
+      this.milk = this.add.sprite(250, 400,'milk').setOrigin(.5, .5).setInteractive();
+      this.eggs = this.add.sprite(300, 200,'eggs').setOrigin(.5, .5).setInteractive();
+      this.flour = this.add.sprite(100, 250,'flour').setOrigin(.5, .5).setInteractive();
+      
       
       let yoinked = null;
   
-      //batter
-      this.batter.on('pointerdown', function() {
-        yoinked = this.batter;
+      //milk
+      this.milk.on('pointerdown', function() {
+        yoinked = this.milk;
       }, this);
-      //batter2
-      this.batter2.on('pointerdown', function() {
-        yoinked = this.batter2;
+      //eggs
+      this.eggs.on('pointerdown', function() {
+        yoinked = this.eggs;
       }, this);
-      //batter3
-      this.batter3.on('pointerdown', function() {
-        yoinked = this.batter3;
+      //flour
+      this.flour.on('pointerdown', function() {
+        yoinked = this.flour;
       }, this);
 
       this.input.on('pointerup', function() {
@@ -48,8 +53,8 @@ class TaskTwo extends Phaser.Scene {
 
     update() {
       //collision checking
-      if(this.collisioncheck(this.batter, this.mixing_bowl) || this.collisioncheck(this.batter2, this.mixing_bowl) 
-            || this.collisioncheck(this.batter3, this.mixing_bowl)) {
+      if(this.collisioncheck(this.milk, this.mixing_bowl) || this.collisioncheck(this.eggs, this.mixing_bowl) 
+            || this.collisioncheck(this.flour, this.mixing_bowl)) {
         console.log('ingredient in bowl');
       }
 
