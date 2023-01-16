@@ -4,6 +4,8 @@ class SceneOne extends Phaser.Scene {
     }
     preload(){
       this.load.image('player', './assets/player.png');
+      this.load.image('textboxkitchen', './assets/textbox_kitchen.png');
+
 
       this.load.image('order', './assets/order.png');
       this.load.image('batter', './assets/batter.png');
@@ -77,6 +79,12 @@ class SceneOne extends Phaser.Scene {
           current_scene.scene.start('Customers');
         });
 
+        this.textboxk = this.add.sprite(gamewidth/1.15, 150, 'textboxkitchen').setOrigin(0.5, 0.5).setInteractive();
+        this.textboxk.scaleX=.5;
+        this.textboxk.scaleY=.5;
+        this.textboxk.alpha=0;
+
+
         //test click and drag
         let test = this.add.sprite(100, 200,'player').setOrigin(.5, .5).setInteractive();
         let yoinked = null;
@@ -127,9 +135,13 @@ class SceneOne extends Phaser.Scene {
       }
 
     update() {
+      //textbox alpha
+      if(textbox)
+      this.textboxk.alpha= this.player.x/this.cashier.x;
 
       //movement
       this.movingstuff(this.player);
+      this.movingstuff(this.textboxk);
 
       //checks to see if player is close enough to hitbox to trigger task
 
