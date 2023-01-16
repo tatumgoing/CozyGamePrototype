@@ -223,11 +223,11 @@ class SceneOne extends Phaser.Scene {
     collisioncheck(station) {
       if(this.player.x +50>= station.x && this.player.x-50 <= station.x +station.width*.75 && this.player.y +50 >= station.y && this.player.y-50<= station.y+ station.height*.75) {
         station.alpha= 1;
-        return true;
+        //return true;
       }
       else {
         station.alpha= .50;
-        return false;
+        //return false;
       }
     }
 

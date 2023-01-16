@@ -55,7 +55,7 @@ class TaskTwo extends Phaser.Scene {
 
       if(Phaser.Input.Keyboard.JustDown(keySPACE) && ordered){
         console.log('mixed');
-        mixed=true;
+        mixed = true;
        }
 
       if(Phaser.Input.Keyboard.JustDown(keyESC)){
