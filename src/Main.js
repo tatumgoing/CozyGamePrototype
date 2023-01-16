@@ -22,3 +22,4 @@ let ordered= false;
 let mixed= false;
 let cooked= false;
 let decorated= false;
+let textbox= false;
