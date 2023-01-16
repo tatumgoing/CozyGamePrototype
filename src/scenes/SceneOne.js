@@ -84,26 +84,6 @@ class SceneOne extends Phaser.Scene {
         this.textboxk.scaleY=.5;
         this.textboxk.alpha=0;
 
-
-        //test click and drag
-        let test = this.add.sprite(100, 200,'player').setOrigin(.5, .5).setInteractive();
-        let yoinked = null;
-
-        test.on('pointerdown', function() {
-          yoinked = test;
-        }, this);
-
-        this.input.on('pointerup', function() {
-          yoinked = null;
-        }, this);
-
-        this.input.on('pointermove', function(pointer) {
-          if (yoinked != null) {
-            yoinked.x = pointer.x + current_scene.cameras.main.centerX-(current_scene.cameras.main.displayWidth/2);
-            yoinked.y = pointer.y + current_scene.cameras.main.centerY-(current_scene.cameras.main.displayHeight/2);
-          }
-        }, this);
-
         //cakethings
         this.order= this.add.sprite(gamewidth/1.15, gameheight/2-50,'order').setOrigin(.5,.5);
         this.batter= this.add.sprite(gamewidth/1.15, gameheight/2-50,'batter').setOrigin(.5,.5);
